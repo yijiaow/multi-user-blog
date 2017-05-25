@@ -134,6 +134,8 @@ class PostHandler(Handler):
     @login_required 
     def post(self, post_id):
         post = Post.by_id(post_id)
+        if not post:
+            return self.error(404)
         message = ''
         if self.user.key().id() == post.author:
             message = 'You cannot like your own post.'
