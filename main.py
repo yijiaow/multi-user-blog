@@ -187,6 +187,8 @@ class EditPost(Handler):
     @login_required
     def post(self, post_id):
         post = Post.by_id(post_id)
+        if not post:
+            return self.error(404)
         subject = self.request.get('subject')
         content = self.request.get('content')
         error = ''
