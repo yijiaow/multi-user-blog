@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Login</h2>
+	<form method="post" novalidate>
+		<table>
+			<tr>
+				<td class="label">Username</td>
+				<td><input type="text" name="username" value="{{username}}"></td>
+			</tr>
+			<tr>
+				<td class="label">Password</td>
+				<td><input type="password" name="password" value=""></td>
+			</tr>
+			<tr>
+				<td class="error">{{error_login}}</td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<button type="submit" class="submit-btn">Login</button>
+	</form>
+{% endblock %}

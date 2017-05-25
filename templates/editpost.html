@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Edit your post</h2>
+	<form method="post">
+		<div class="editpost">
+			<div class="label post-label">Subject</div>
+			<input type="text" name="subject" value="{{p.subject}}">
+			<div class="label post-label">Content</div>
+			<textarea name="content">{{p.render_content() | safe}}</textarea>
+		</div>
+		<button type="submit" class="submit-btn">Save</button>
+		<button class="cancel-btn">Cancel</button>
+	</form>
+{% endblock %}

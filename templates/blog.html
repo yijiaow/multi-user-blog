@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+	<article>
+	{% for p in posts %}
+		{{p.render() | safe}}
+		<br><br>
+		<div class="post-options" data-pid={{p.key().id()}}>
+			{% if user %}
+				{% if user.key().id()==p.author %}
+					<button class="option" onclick="window.location='/blog/{{p.key().id()}}/edit'">Edit</button>
+					<button class="option del-btn">Delete</button>
+				{% endif %}
+				<button class="option like-btn">{{p.btn_txt}}<span class="heart">  &#x2764; </span><span class="counter">{{p.likes_counter}}</span></button>
+			{% endif %}
+			<a href="/blog/{{p.key().id()}}" class="option" id="show-comment">Show Comments <span>&#x1f4ac;</span></a>
+		</div>
+	{% endfor %}
+	</article>
+{% endblock content %}

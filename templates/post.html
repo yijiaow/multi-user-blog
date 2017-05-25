@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<article>
+		<div class="post-heading" data-pid={{p.key().id()}}>
+			<div class="post-subject"><h2>{{p.subject}}</h2></div>
+			<div class="info-line">
+				<span>By: {{p.author.name}}</span>
+				<span>{{p.created.strftime("%b %d, %Y")}}</span>
+			</div>
+		</div>
+		<br><br>
+    	<div class="post-content">{{p.render_content() | safe}}</div>
+		{% if user %}
+			<div class="post-options" data-pid={{p.key().id()}}>
+				{% if user.key().id()==p.author %}
+					<button class="option"
+						onclick="window.location='/blog/{{p.key().id()}}/edit'">Edit</button>
+					<button class="option del-btn del-post">Delete</button>
+				{% endif %}
+				<button class="option like-btn">{{p.btn_txt}}<span class="heart">  &#x2764; </span><span class="counter">{{p.likes_counter}}</span>
+				</button>
+				<button class="option submit-btn" id="new-comment-btn">Comment <span>&#x1f4ac;</span></button>
+			</div>
+		{% endif %}
+		<div class="comment-section">
+			<div class="new-comment" >
+				<h3>Leave a comment: </h3>
+				<form id="new-comment-form" class="comment-form">
+					<textarea name="comment" id="new-comment-input" placeholder="Your thoughts on this post..."></textarea>
+					<button type="submit" class="submit-btn">Submit</button>
+					<button class="cancel-btn">Cancel</button>
+				</form>
+			</div>
+			<h3>Comments: </h3>
+			<ul class="post-comments">
+				{% for c in comments %}
+					<li class="comment-item" data-cid="{{c.key().id()}}">
+						<div class="comment-body">
+							<div class="info-line">
+								<span>{{c.author.name}} wrote:</span>
+								<span>{{c.created.strftime("%b %d, %Y")}}</span>
+							</div>
+							<p class="content">{{c.content | safe}}</p>
+							<!-- hidden comment edit form gets displayed when user clicks edit. Retrieve data from server side through AJAX call -->
+							{% if user.key().id()==c.author %}
+								<button class="edit-btn">Edit</button>
+								<button class="del-btn del-comment">Delete</button>
+							{% endif %}
+						</div>
+		        		<form class="comment-form" style="display: none">
+		          			<textarea name="comment" id="edit-comment-input" class="comment-input"></textarea>
+		          			<button class="comm-btn save-btn">Save</button>
+		          			<button class="cancel-btn">Cancel</button>
+		        		</form>
+			        </li>
+				{% endfor %}
+			</ul>
+		</div>
+	</article>
+{% endblock content %}

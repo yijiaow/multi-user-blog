@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Create a new post</h2>
+	<form method="post">
+		<div class="newpost">
+			<div class="label post-label">Subject</div>
+			<input type="text" name="subject">
+			<div class="label post-label">Content</div>
+			<textarea name="content"></textarea>
+		</div>
+		<button type="submit" class="submit-btn">Submit</button>
+		<button class="cancel-btn">Cancel</button>
+	</form>
+{% endblock %}
+	

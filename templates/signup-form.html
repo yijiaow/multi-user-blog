@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Register</h2>
+	<form method="post" novalidate>
+		<table>
+			<tr>
+				<td class="label">Username</td>
+				<td><input type="text" name="username" value="{{username}}"></td>
+				<td class="error">{{error_username}}</td>
+			</tr>
+			<tr>
+				<td class="label">Password</td>
+				<td><input type="password" name="password" value=""></td>
+				<td class="error">{{error_password}}
+			</tr>
+			<tr>
+				<td class="label">Verify Password</td>
+				<td><input type="password" name="verify" value=""></td>
+				<td class="error">{{error_verify}}</td>
+			</tr>
+			<tr>
+				<td class="label">Email (Optional)</td>
+				<td><input type="email" name="email" value="{{email}}"></td>
+				<td class="error">{{error_email}}</td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<button type="submit" class="submit-btn">Submit</button>
+	</form>
+{% endblock %}

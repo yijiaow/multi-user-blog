@@ -1,0 +1,11 @@
+<div class="post-heading" data-pid={{p.key().id()}}>
+	<div class="post-subject">
+		<h2><a href="/blog/{{p.key().id()}}">{{p.subject}}</a></h2>
+	</div>
+	<div class="info-line">
+		<span>By: {{p.author.name}}</span>
+		<span>{{p.created.strftime("%b %d, %Y")}}</span>
+	</div>
+</div>
+<br><br>
+<div class="post-content">{{p._render_text | safe}}</div>
