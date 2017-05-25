@@ -189,6 +189,8 @@ class EditPost(Handler):
         post = Post.by_id(post_id)
         if not post:
             return self.error(404)
+        if self.user.key().id() != post.author:
+            self.write("You don't have access to edit this post.")
         subject = self.request.get('subject')
         content = self.request.get('content')
         error = ''
@@ -221,19 +223,22 @@ class CommentHandler(Handler):
     @login_required
     def post(self, post_id):
         comm_content = self.request.get('comment')
+        if not comm_content:
+            return
         cid = self.request.get('comment_id')
-        if comm_content:
-            if cid:
-                comment = Comment.by_id(cid)
+        if cid:
+            comment = Comment.by_id(cid)
+            if comment:
                 if self.user.key().id() == comment.author:
                     comment.content = comm_content
                     comment.put()
-            else:  # when cid does not exist --> create new comment
-                new_comment = Comment(post_id=post_id, content=comm_content, 
-                                    author=self.user)
-                new_comment.put()
-                cid = new_comment.key().id()
-                self.write(json.dumps({'cid': cid, 'comm_author': self.user.name, 'comm_content': comm_content}))
+            else:
+                return self.error(404)
+        else:  # when cid does not exist --> create new comment
+            new_comment = Comment(post_id=post_id, content=comm_content, author=self.user)
+            new_comment.put()
+            cid = new_comment.key().id()
+            self.write(json.dumps({'cid': cid, 'comm_author': self.user.name, 'comm_content': comm_content}))
 
 class DeleteComment(Handler):
 
